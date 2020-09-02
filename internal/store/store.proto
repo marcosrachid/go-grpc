@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package store;
+
+message Product {
+	Products product = 1;
+	float value = 2;
+}
+
+message OrderRequest {
+	Products product = 1;
+}
+
+message OrderResponse {
+	Product product = 1;
+	int64 deliveryDate = 2;
+}
+
+enum Products {
+	SHIRT = 0;
+	PANTS = 1;
+	SOCKS = 2;
+	UNDERWEAR = 3;
+	DRESS = 4;
+	SHOES = 5;
+}
+
+service StoreService {
+	rpc Order(OrderRequest) returns (OrderResponse);
+}
