@@ -1,0 +1,42 @@
+version: '3.3'
+
+networks:
+  basic:
+
+services:
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    expose:
+      - '4000'
+    networks:
+      - basic
+
+  client1:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    restart: unless-stopped
+    environment:
+      - ADDR=server
+    depends_on:
+      - server
+    networks:
+      - basic
+
+  client2:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    restart: unless-stopped
+    environment:
+      - ADDR=server
+    depends_on:
+      - server
+    networks:
+      - basic

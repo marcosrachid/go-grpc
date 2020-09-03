@@ -6,8 +6,10 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/marcosrachid/go-grpc/internal/store"
+	"github.com/marcosrachid/go-grpc/pkg/utils"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -18,7 +20,10 @@ func main() {
 	keyFile := filepath.Join(wd, "ssl", "private.key")
 	creds, _ := credentials.NewServerTLSFromFile(certFile, keyFile)
 
-	serverAddr := fmt.Sprintf("%s:%d", store.ADDR, store.PORT)
+	serverAddr := fmt.Sprintf(
+		":%s",
+		utils.GetenvDefault("PORT", strconv.Itoa(store.PORT)),
+	)
 	listen, err := net.Listen("tcp", serverAddr)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)

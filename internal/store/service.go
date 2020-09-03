@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+
+	"google.golang.org/grpc/peer"
 )
 
 const (
@@ -50,8 +52,8 @@ func NewServer() *StoreServiceService {
 }
 
 func (s *StoreServer) Order(ctx context.Context, r *OrderRequest) (*OrderResponse, error) {
-
-	fmt.Printf("[gRPC] Order=%s\n", r.GetProduct())
+	p, _ := peer.FromContext(ctx)
+	fmt.Printf("[gRPC] [$=%s] Order=%s\n", p.Addr.String(), r.GetProduct())
 
 	product := PRODUCTS[r.GetProduct()]
 	response := &OrderResponse{
