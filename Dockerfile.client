@@ -18,7 +18,6 @@ FROM alpine:3.11.6
 WORKDIR /root/
 
 COPY --from=builder /go/src/go-grpc/client .
-COPY ./ssl ./ssl
 
 # Command to run the executable
 CMD ["./client"] 

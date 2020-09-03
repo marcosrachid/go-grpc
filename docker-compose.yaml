@@ -14,6 +14,8 @@ services:
       - '4000:4000'
     expose:
       - '4000'
+    volumes:
+    - ./ssl:/root/ssl
     networks:
       - basic
 
@@ -26,6 +28,8 @@ services:
       - ADDR=server
     depends_on:
       - server
+    volumes:
+      - ./ssl/cert.pem:/root/ssl/cert.pem
     networks:
       - basic
 
@@ -38,5 +42,7 @@ services:
       - ADDR=server
     depends_on:
       - server
+    volumes:
+      - ./ssl/cert.pem:/root/ssl/cert.pem
     networks:
       - basic
